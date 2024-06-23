@@ -152,6 +152,7 @@ extension VideoX {
         }
         let timeRange = CMTimeRangeMake(start: .zero, duration: provider.duration)
         try videoCompositionTrack.insertTimeRange(timeRange, of: track, at: .zero)
+        videoCompositionTrack.preferredTransform = CGAffineTransform(0, -1, 1, 0, 1080, 0)
         
         if let audio = self.provider.audioTracks.first,
            let audioCompositionTrack = composition.addMutableTrack(withMediaType: .audio, preferredTrackID: kCMPersistentTrackID_Invalid) {
