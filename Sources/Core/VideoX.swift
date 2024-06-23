@@ -164,7 +164,7 @@ extension VideoX {
     
     private func setupVideoComposition(options: [VideoX.Option: Any], composition: AVComposition) throws -> AVMutableVideoComposition {
         let videoComposition = AVMutableVideoComposition(propertiesOf: provider.asset)
-        videoComposition.customVideoCompositorClass = VideoCompositor.self
+//        videoComposition.customVideoCompositorClass = VideoCompositor.self
         videoComposition.frameDuration = VideoX.Option.setupVideoFrameDuration(options: options)
         videoComposition.renderSize = composition.naturalSize
         //videoComposition.animationTool = setupAnimationTool(renderSize: composition.naturalSize)
