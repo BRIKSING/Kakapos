@@ -53,8 +53,8 @@ open class Instruction: AVMutableVideoCompositionInstruction {
     }
     
     private func setupLayerInstructions(options: [VideoX.Option: Any], track: AVCompositionTrack) -> [AVVideoCompositionLayerInstruction] {
-        if let value = VideoX.Option.VideoCompositionInstructionLayerInstructions.has(with: options) as? [AVVideoCompositionLayerInstruction] {
-            return value
+        if let callback = VideoX.Option.VideoCompositionInstructionLayerInstructionsCallback.has(with: options) as? (AVCompositionTrack) -> [AVVideoCompositionLayerInstruction] {
+            return callback(track)
         }
         let layerInstruction = AVMutableVideoCompositionLayerInstruction(assetTrack: track)
         layerInstruction.trackID = track.trackID

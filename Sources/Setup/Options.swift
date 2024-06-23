@@ -55,7 +55,7 @@ extension VideoX.Option {
     /// Tracks are layered in the composition according to the top-to-bottom order of the layerInstructions array;
     /// the track with trackID of the first instruction in the array will be layered on top, with the track with the trackID of the second instruction immediately underneath, etc.
     /// If this key is nil, the output will be a fill of the background color.
-    public static let VideoCompositionInstructionLayerInstructions: VideoX.Option = .init(rawValue: 1 << 6)
+    public static let VideoCompositionInstructionLayerInstructionsCallback: VideoX.Option = .init(rawValue: 1 << 6)
     
     /// Specifies a time range to be exported from the source.  meaning that the full duration of the asset will be exported.
     /// Use the `TimeRangeType`, The default timeRange of an export session is kCMTimeZero..kCMTimePositiveInfinity.
