@@ -164,25 +164,30 @@ extension VideoX {
     
     private func setupVideoComposition(options: [VideoX.Option: Any], composition: AVComposition) throws -> AVMutableVideoComposition {
         let videoComposition = AVMutableVideoComposition(propertiesOf: provider.asset)
-//        videoComposition.customVideoCompositorClass = VideoCompositor.self
+        videoComposition.customVideoCompositorClass = VideoX.Option.setuoVideoCompositionCustomCompositor(options: options)
         videoComposition.frameDuration = VideoX.Option.setupVideoFrameDuration(options: options)
         videoComposition.renderSize = composition.naturalSize
-        //videoComposition.animationTool = setupAnimationTool(renderSize: composition.naturalSize)
+        videoComposition.animationTool = setupAnimationTool(options: options, renderSize: composition.naturalSize)
         if #available(macOS 10.14, iOS 10, tvOS 9.0, *) {
             videoComposition.renderScale = VideoX.Option.setupRenderScale(options: options)
         }
         return videoComposition
     }
     
-    private func setupAnimationTool(renderSize: CGSize) -> AVVideoCompositionCoreAnimationTool? {
-        let parentLayer = CALayer()
-        parentLayer.isGeometryFlipped = true
-        let videoLayer = CALayer()
-        parentLayer.frame = CGRect(origin: CGPoint.zero, size: renderSize)
-        videoLayer.frame = CGRect(origin: CGPoint.zero, size: renderSize)
-        parentLayer.addSublayer(videoLayer)
-        //parentLayer.addSublayer(animationLayer)
-        return AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, in: parentLayer)
+    private func setupAnimationTool(options: [VideoX.Option: Any], renderSize: CGSize) -> AVVideoCompositionCoreAnimationTool? {
+        guard let animationTool = VideoX.Option.VideoCompositionAnimationTool.has(with: options) as? AVVideoCompositionCoreAnimationTool else {
+//            let parentLayer = CALayer()
+//            parentLayer.isGeometryFlipped = true
+//            let videoLayer = CALayer()
+//            parentLayer.frame = CGRect(origin: CGPoint.zero, size: renderSize)
+//            videoLayer.frame = CGRect(origin: CGPoint.zero, size: renderSize)
+//            parentLayer.addSublayer(videoLayer)
+//            //parentLayer.addSublayer(animationLayer)
+//            return AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, in: parentLayer)
+            return nil
+        }
+        
+        return animationTool
     }
     
     private func  setupAudioMix() -> AVAudioMix? {

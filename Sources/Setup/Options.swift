@@ -64,6 +64,12 @@ extension VideoX.Option {
     
     /// Set speed the scale at which the video composition should render.
     public static let VideoCompositionRenderScale: VideoX.Option = .init(rawValue: 1 << 8)
+    
+    ///Custom compositor for video composition in exporting video
+    public static let VideoCompositionCustomCompositor: VideoX.Option = .init(rawValue: 1 << 9)
+    
+    /// Custom animation tool for video composition in exporting video
+    public static let VideoCompositionAnimationTool: VideoX.Option = .init(rawValue: 1 << 10)
 }
 
 extension VideoX.Option {
@@ -130,6 +136,14 @@ extension VideoX.Option {
         guard let value = VideoX.Option.VideoCompositionFrameDuration.has(with: options) as? CMTime else {
             return CMTimeMake(value: 1, timescale: 30)
         }
+        return value
+    }
+    
+    static func setuoVideoCompositionCustomCompositor(options: [VideoX.Option: Any]) -> AVVideoCompositing.Type {
+        guard let value = VideoX.Option.VideoCompositionCustomCompositor.has(with: options) as? AVVideoCompositing.Type else {
+            return VideoCompositor.self
+        }
+        
         return value
     }
 }
