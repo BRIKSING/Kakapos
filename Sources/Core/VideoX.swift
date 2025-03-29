@@ -171,6 +171,9 @@ extension VideoX {
         if #available(macOS 10.14, iOS 10, tvOS 9.0, *) {
             videoComposition.renderScale = VideoX.Option.setupRenderScale(options: options)
         }
+        
+        VideoX.Option.setupVideoCompositionValues(options: options, videoComposition: videoComposition)
+        
         return videoComposition
     }
     

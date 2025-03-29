@@ -70,6 +70,9 @@ extension VideoX.Option {
     
     /// Custom animation tool for video composition in exporting video
     public static let VideoCompositionAnimationTool: VideoX.Option = .init(rawValue: 1 << 10)
+    
+    /// Custom video composition setup callback
+    public static let VideoCompositionSetupCallback: VideoX.Option = .init(rawValue: 1 << 11)
 }
 
 extension VideoX.Option {
@@ -145,5 +148,14 @@ extension VideoX.Option {
         }
         
         return value
+    }
+    
+    static func setupVideoCompositionValues(options: [VideoX.Option: Any], videoComposition: AVMutableVideoComposition) {
+        guard let callback = VideoX.Option.VideoCompositionSetupCallback.has(with: options) as? (_ composition: AVMutableVideoComposition) -> Void else {
+            print("No VideoCompositionValues callback provided")
+            return
+        }
+        
+        callback(videoComposition)
     }
 }
